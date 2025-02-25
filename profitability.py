@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit_dynamic_filters import DynamicFilters
 import pandas as pd
 from functions import get_income_statement, get_income_statement_growth, get_financial_ratios, get_financial_ratios_ttm, revenue, plot_revenue, \
     gross_profit, plot_gross_profit, net_income, plot_net_income, plot_revenue_net_income_changes, \
