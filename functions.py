@@ -1,14 +1,10 @@
 import fmpsdk
 import yfinance as yf
-from dotenv import load_dotenv
 import os
 import requests
-import json
 import plotly.graph_objects as go
 import pandas as pd
 
-
-load_dotenv()
 api_key = os.environ.get('API_KEY')
 
 def search_company(query):
