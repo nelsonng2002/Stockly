@@ -1,5 +1,8 @@
 streamlit
 pandas
 plotly
+fmpsdk
+yfinance>=0.2.54
+requests
 google-cloud-aiplatform
 google-cloud-logging
