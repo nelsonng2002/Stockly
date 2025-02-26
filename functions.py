@@ -152,6 +152,7 @@ def yf_income_statement(symbol, timeframe):
     'TotalRevenue': 'Total Revenue',
     'OperatingRevenue': 'Operating Revenue'
 }, inplace=True)
+    dataframe = dataframe.applymap(lambda x: int(x) if pd.notnull(x) else x)
     if timeframe == 'Yearly':
         income_statement = dataframe.drop(columns=dataframe.columns[-1], axis=1)
         return income_statement
@@ -237,6 +238,7 @@ def yf_balance_sheet(symbol, timeframe):
     'CashEquivalents': 'Cash Equivalents',
     'CashFinancial': 'Cash Financial'
 }, inplace=True)
+    dataframe = dataframe.applymap(lambda x: int(x) if pd.notnull(x) else x)
     if timeframe == 'Yearly':
         balance_sheet = dataframe.drop(columns=dataframe.columns[-1], axis=1)
         return balance_sheet
@@ -307,6 +309,7 @@ def yf_cashflow(symbol, timeframe):
     'DepreciationAndAmortization': 'Depreciation And Amortization',
     'NetIncomeFromContinuingOperations': 'Net Income From Continuing Operations'
 }, inplace=True)
+    dataframe = dataframe.applymap(lambda x: int(x) if pd.notnull(x) else x)
     if timeframe == 'Yearly':
         cashflow = dataframe.drop(columns=dataframe.columns[-1], axis=1)
         return cashflow
