@@ -1421,6 +1421,29 @@ def plot_peg_ratio(symbol, peg_ratio_list):
     )
     return fig
 
+def plot_peg_ratio_comparison(symbol_list, peg_ratio_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, peg_ratio_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        peg_ratios = [entry['peg_ratio'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} PEG Ratio', x=dates_filtered, y=peg_ratios, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Price to Earnings to Growth (PEG) Ratio Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='PEG Ratio',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
+    return fig
+
 def get_pb_ratio(key_metrics, key_metrics_ttm):
     pb_ratio_list = []
     pb_ratio_list.append({
@@ -1455,6 +1478,29 @@ def plot_pb_ratio(symbol, pb_ratio_list):
         marker_color='rgb(158,202,225)',
         width=0.25
     )
+    return fig
+
+def plot_pb_ratio_comparison(symbol_list, pb_ratio_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, pb_ratio_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        pb_ratios = [entry['pb_ratio'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} PB Ratio', x=dates_filtered, y=pb_ratios, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Price to Book (PB) Ratio Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='PB Ratio',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
     return fig
 
 def get_ps_ratio(key_metrics, key_metrics_ttm):
@@ -1493,6 +1539,29 @@ def plot_ps_ratio(symbol, ps_ratio_list):
     )
     return fig
 
+def plot_ps_ratio_comparison(symbol_list, ps_ratio_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, ps_ratio_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        ps_ratios = [entry['ps_ratio'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} PS Ratio', x=dates_filtered, y=ps_ratios, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Price to Sales (PS) Ratio Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='PS Ratio',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
+    return fig
+
 def get_ev_ebitda(key_metrics, key_metrics_ttm):
     ev_ebitda_list = []
     ev_ebitda_list.append({
@@ -1527,6 +1596,29 @@ def plot_ev_ebitda(symbol, ev_ebitda_list):
         marker_color='rgb(158,202,225)',
         width=0.25
     )
+    return fig
+
+def plot_ev_ebitda_comparison(symbol_list, ev_ebitda_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, ev_ebitda_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        ev_ebitdas = [entry['ev_ebitda'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} EV/EBITDA', x=dates_filtered, y=ev_ebitdas, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Enterprise Value to EBITDA (EV/EBITDA) Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='EV/EBITDA',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
     return fig
 
 def get_price_to_fcf(key_metrics, key_metrics_ttm):
@@ -1565,6 +1657,29 @@ def plot_price_to_fcf(symbol, price_to_fcf_list):
     )
     return fig
 
+def plot_price_to_fcf_comparison(symbol_list, price_to_fcf_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, price_to_fcf_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        price_to_fcfs = [entry['price_to_fcf'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} P/FCF', x=dates_filtered, y=price_to_fcfs, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Price to Free Cash Flow (P/FCF) Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='P/FCF',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
+    return fig
+
 def get_price_to_ocf(key_metrics, key_metrics_ttm):
     price_to_ocf_list = []
     price_to_ocf_list.append({
@@ -1599,6 +1714,29 @@ def plot_price_to_ocf(symbol, price_to_ocf_list):
         marker_color='rgb(158,202,225)',
         width=0.25
     )
+    return fig
+
+def plot_price_to_ocf_comparison(symbol_list, price_to_ocf_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, price_to_ocf_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        price_to_ocfs = [entry['price_to_ocf'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} P/OCF', x=dates_filtered, y=price_to_ocfs, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Price to Operating Cash Flow (P/OCF) Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='P/OCF',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
     return fig
 
 def get_ev_to_sales(key_metrics, key_metrics_ttm):
@@ -1637,6 +1775,29 @@ def plot_ev_to_sales(symbol, ev_to_sales_list):
     )
     return fig
 
+def plot_ev_to_sales_comparison(symbol_list, ev_to_sales_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, ev_to_sales_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        ev_to_sales = [entry['ev_to_sales'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} EV/Sales', x=dates_filtered, y=ev_to_sales, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Enterprise Value to Sales (EV/Sales) Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='EV/Sales',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
+    return fig
+
 def get_ev_to_ocf(key_metrics, key_metrics_ttm):
     ev_to_ocf_list = []
     ev_to_ocf_list.append({
@@ -1671,6 +1832,29 @@ def plot_ev_to_ocf(symbol, ev_to_ocf_list):
         marker_color='rgb(158,202,225)',
         width=0.25
     )
+    return fig
+
+def plot_ev_to_ocf_comparison(symbol_list, ev_to_ocf_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, ev_to_ocf_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        ev_to_ocf = [entry['ev_to_ocf'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} EV/OCF', x=dates_filtered, y=ev_to_ocf, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Enterprise Value to Operating Cash Flow (EV/OCF) Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='EV/OCF',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
     return fig
 
 def get_ev_to_fcf(key_metrics, key_metrics_ttm):
@@ -1709,6 +1893,29 @@ def plot_ev_to_fcf(symbol, ev_to_fcf_list):
     )
     return fig
 
+def plot_ev_to_fcf_comparison(symbol_list, ev_to_fcf_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, ev_to_fcf_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        ev_to_fcf = [entry['ev_to_fcf'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} EV/FCF', x=dates_filtered, y=ev_to_fcf, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Enterprise Value to Free Cash Flow (EV/FCF) Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='EV/FCF',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
+    return fig
+
 def get_dividend_yield(key_metrics, key_metrics_ttm):
     dividend_yield_list = []
     dividend_yield_list.append({
@@ -1743,6 +1950,29 @@ def plot_dividend_yield(symbol, dividend_yield_list):
         marker_color='rgb(158,202,225)',
         width=0.25
     )
+    return fig
+
+def plot_dividend_yield_comparison(symbol_list, dividend_yield_comparison_list):
+    fig = go.Figure()
+    colors = ['rgb(158,202,225)', 'rgb(255,127,80)', 'rgb(34,139,34)', 'rgb(255,215,0)', 'rgb(75,0,130)']
+    for i, (symbol, comparison_list) in enumerate(zip(symbol_list, dividend_yield_comparison_list)):
+        filtered_comparison_list = [entry for entry in comparison_list if entry['date'][:4] > '2014']
+        dates_filtered = [entry['date'][:4] if entry['date'] != 'TTM' else 'TTM' for entry in filtered_comparison_list][::-1]
+        dividend_yields = [entry['dividend_yield'] for entry in filtered_comparison_list][::-1]
+        fig.add_trace(go.Bar(name=f'{symbol} Dividend Yield', x=dates_filtered, y=dividend_yields, marker_color=colors[i % len(colors)]))
+    
+    fig.update_layout(
+        title='Dividend Yield Comparison Over Time',
+        xaxis_title='Date',
+        yaxis_title='Dividend Yield',
+        xaxis=dict(type='category', title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black')),
+        yaxis=dict(title_font=dict(size=14, color='black'), tickfont=dict(size=14, color='black'))
+    )
+
+    fig.update_traces(
+        width=0.25
+    )
+
     return fig
 
 def get_debt_to_equity_ratio(financial_ratios, financial_ratios_ttm):

@@ -5,7 +5,10 @@ from functions import get_key_metrics, get_key_metrics_ttm, get_financial_ratios
                     get_price_to_fcf, plot_price_to_fcf, get_price_to_ocf, plot_price_to_ocf, \
                     get_ev_to_sales, plot_ev_to_sales, get_ev_to_ocf, plot_ev_to_ocf, \
                     get_ev_to_fcf, plot_ev_to_fcf, get_dividend_yield, plot_dividend_yield, \
-                    plot_pe_ratios_comparison
+                    plot_pe_ratios_comparison, plot_peg_ratio_comparison, plot_pb_ratio_comparison, \
+                    plot_ps_ratio_comparison, plot_ev_ebitda_comparison, plot_price_to_fcf_comparison, \
+                    plot_price_to_ocf_comparison, plot_ev_to_sales_comparison, plot_ev_to_ocf_comparison, \
+                    plot_ev_to_fcf_comparison, plot_dividend_yield_comparison
                     
 
 symbol = st.session_state.get('symbol', 'AAPL')
@@ -34,19 +37,16 @@ pe_ratio_plot = plot_pe_ratio(symbol, pe_ratio_list)
 pe_ratio_container = st.container()
 pe_ratio_expander = pe_ratio_container.expander('PE Ratio', expanded=True)
 pe_ratio_expander.plotly_chart(pe_ratio_plot)
-
-# Compare PE Ratios
-pe_ratios_comparison_container = st.container()
-pe_ratios_comparison_expander = pe_ratios_comparison_container.expander('PE Ratios Comparison', expanded=True)
-pe_ratio_symbols = pe_ratios_comparison_expander.text_input('Enter a list of up to 4 stock symbols separated by commas and hit ENTER', value='AAPL,MSFT,GOOGL,AMZN')
-symbol_list = []
-pe_ratios_comparison_list = []
-for symbol in pe_ratio_symbols.split(','):
-    symbol_list.append(symbol)
-    symbol_pe_ratio_list = get_pe_ratio(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
-    pe_ratios_comparison_list.append(symbol_pe_ratio_list)
-pe_ratios_comparison_plot = plot_pe_ratios_comparison(symbol_list, pe_ratios_comparison_list)
-pe_ratios_comparison_expander.plotly_chart(pe_ratios_comparison_plot)
+# pe_ratios_comparison_expander = pe_ratio_expander.expander('PE Ratios Comparison', expanded=True)
+# pe_ratio_symbols = pe_ratios_comparison_expander.text_input('Enter a list of up to 4 stock symbols separated by commas and hit ENTER', value='AAPL,MSFT,GOOGL,AMZN')
+# symbol_list = []
+# pe_ratios_comparison_list = []
+# for symbol in pe_ratio_symbols.split(','):
+#     symbol_list.append(symbol)
+#     symbol_pe_ratio_list = get_pe_ratio(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+#     pe_ratios_comparison_list.append(symbol_pe_ratio_list)
+# pe_ratios_comparison_plot = plot_pe_ratios_comparison(symbol_list, pe_ratios_comparison_list)
+# pe_ratios_comparison_expander.plotly_chart(pe_ratios_comparison_plot)
 
 # Price to Earnings to Growth Ratio (PEG Ratio)
 
@@ -135,7 +135,58 @@ dividend_yield_container = st.container()
 dividend_yield_expander = dividend_yield_container.expander('Dividend Yield', expanded=False)
 dividend_yield_expander.plotly_chart(dividend_yield_plot)
 
-
-
-
-
+# Compare Metrics with Competitors
+comparison_container = st.container()
+comparison_container.header('Compare Metrics with Competitors')
+metric_to_compare = comparison_container.selectbox('Select a metric to compare with competitors', options=['PE Ratio', 'PEG Ratio', 'PB Ratio', 'PS Ratio', 'Price to FCF', 'Price to OCF', 'EV to EBITDA', 'EV to Sales', 'EV to OCF', 'EV to FCF', 'Dividend Yield'])
+comparison_symbols = comparison_container.text_input('Enter a list of up to 4 stock symbols separated by commas and hit ENTER', value='AAPL,MSFT,GOOGL,AMZN')
+symbol_list = []
+comparison_metric_list = []
+for symbol in comparison_symbols.split(','):
+    symbol_list.append(symbol)
+    if metric_to_compare == 'PE Ratio':
+        symbol_metric_list = get_pe_ratio(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    elif metric_to_compare == 'PEG Ratio':
+        symbol_metric_list = get_peg_ratio(get_financial_ratios(symbol, period), get_financial_ratios_ttm(symbol))
+    elif metric_to_compare == 'PB Ratio':
+        symbol_metric_list = get_pb_ratio(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    elif metric_to_compare == 'PS Ratio':
+        symbol_metric_list = get_ps_ratio(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    elif metric_to_compare == 'Price to FCF':
+        symbol_metric_list = get_price_to_fcf(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    elif metric_to_compare == 'Price to OCF':
+        symbol_metric_list = get_price_to_ocf(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    elif metric_to_compare == 'EV to EBITDA':
+        symbol_metric_list = get_ev_ebitda(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    elif metric_to_compare == 'EV to Sales':
+        symbol_metric_list = get_ev_to_sales(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    elif metric_to_compare == 'EV to OCF':
+        symbol_metric_list = get_ev_to_ocf(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    elif metric_to_compare == 'EV to FCF':
+        symbol_metric_list = get_ev_to_fcf(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    elif metric_to_compare == 'Dividend Yield':
+        symbol_metric_list = get_dividend_yield(get_key_metrics(symbol, period), get_key_metrics_ttm(symbol))
+    comparison_metric_list.append(symbol_metric_list)
+if metric_to_compare == 'PE Ratio':
+    comparison_plot = plot_pe_ratios_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'PEG Ratio':
+    comparison_plot = plot_peg_ratio_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'PB Ratio':
+    comparison_plot = plot_pb_ratio_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'PS Ratio':
+    comparison_plot = plot_ps_ratio_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'Price to FCF':
+    comparison_plot = plot_price_to_fcf_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'Price to OCF':
+    comparison_plot = plot_price_to_ocf_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'EV to EBITDA':
+    comparison_plot = plot_ev_ebitda_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'EV to Sales':    
+    comparison_plot = plot_ev_to_sales_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'EV to OCF':
+    comparison_plot = plot_ev_to_ocf_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'EV to FCF':
+    comparison_plot = plot_ev_to_fcf_comparison(symbol_list, comparison_metric_list)
+elif metric_to_compare == 'Dividend Yield':
+    comparison_plot = plot_dividend_yield_comparison(symbol_list, comparison_metric_list)
+comparison_container.plotly_chart(comparison_plot)
