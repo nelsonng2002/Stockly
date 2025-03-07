@@ -152,7 +152,7 @@ def yf_income_statement(symbol, timeframe):
     'TotalRevenue': 'Total Revenue',
     'OperatingRevenue': 'Operating Revenue'
 }, inplace=True)
-    dataframe = dataframe.applymap(lambda x: int(x) if pd.notnull(x) else x)
+    dataframe = dataframe.applymap(lambda x: '{:,.0f}'.format(x) if pd.notnull(x) else x)
     if timeframe == 'Yearly':
         income_statement = dataframe.drop(columns=dataframe.columns[-1], axis=1)
         return income_statement
@@ -238,7 +238,7 @@ def yf_balance_sheet(symbol, timeframe):
     'CashEquivalents': 'Cash Equivalents',
     'CashFinancial': 'Cash Financial'
 }, inplace=True)
-    dataframe = dataframe.applymap(lambda x: int(x) if pd.notnull(x) else x)
+    dataframe = dataframe.applymap(lambda x: '{:,.0f}'.format(x) if pd.notnull(x) else x)
     if timeframe == 'Yearly':
         balance_sheet = dataframe.drop(columns=dataframe.columns[-1], axis=1)
         return balance_sheet
@@ -309,22 +309,13 @@ def yf_cashflow(symbol, timeframe):
     'DepreciationAndAmortization': 'Depreciation And Amortization',
     'NetIncomeFromContinuingOperations': 'Net Income From Continuing Operations'
 }, inplace=True)
-    dataframe = dataframe.applymap(lambda x: int(x) if pd.notnull(x) else x)
+    dataframe = dataframe.applymap(lambda x: '{:,.0f}'.format(x) if pd.notnull(x) else x)
     if timeframe == 'Yearly':
         cashflow = dataframe.drop(columns=dataframe.columns[-1], axis=1)
         return cashflow
     elif timeframe == 'Quarterly':
         cashflow = dataframe.drop(columns=dataframe.columns[-2:], axis=1)
         return cashflow
-
-# def get_income_statement(symbol, period='annual'):
-#     income_statement = fmpsdk.income_statement(apikey=api_key, symbol=symbol, period=period)
-#     # file_path = f'json/{symbol}_income_statement.json'
-#     # os.makedirs(os.path.dirname(file_path), exist_ok=True)
-#     # with open(file_path, 'w') as f:
-#     #     json.dump(income_statement, f, indent=4)
-
-#     return income_statement
 
 def get_income_statement(symbol, period):
     url = f"https://financialmodelingprep.com/api/v3/income-statement/{symbol}?period={period}&apikey={api_key}"
